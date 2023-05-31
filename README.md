@@ -1,6 +1,7 @@
 # Case study: Credit card fraud detection
 
 [![Build](https://github.com/felixpeters/fraud-detection/actions/workflows/ci.yml/badge.svg)](https://github.com/felixpeters/fraud-detection/actions/workflows/ci.yml)
+[![Visualize in W&B](https://raw.githubusercontent.com/wandb/assets/main/wandb-github-badge-gradient.svg)](https://wandb.ai/felixpeters/fraud-detection)
 
 Template for developing AI projects according to [proven principles](https://fullstackai.substack.com/p/four-pillars-ai-development) and best practices.
 
