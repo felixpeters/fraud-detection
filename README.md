@@ -3,15 +3,7 @@
 [![Build](https://github.com/felixpeters/fraud-detection/actions/workflows/ci.yml/badge.svg)](https://github.com/felixpeters/fraud-detection/actions/workflows/ci.yml)
 [![Visualize in W&B](https://raw.githubusercontent.com/wandb/assets/main/wandb-github-badge-gradient.svg)](https://wandb.ai/felixpeters/fraud-detection)
 
-Template for developing AI projects according to [proven principles](https://fullstackai.substack.com/p/four-pillars-ai-development) and best practices.
-
-## Features
-
-- Proven folder structure for AI projects
-- Template notebooks for the minimum viable product (MVP) of an AI project
-- Continuous integration with GitHub Actions
-- Pre-commit hooks for code quality, style, and security (black, ruff, codespell, bandit)
-- Testing with pytest, including code coverage
+Template for developing AI projects according to [proven principles](https://fullstackai.substack.com/p/four-pillars-ai-development) and best practices
 
 ## Setup
 
