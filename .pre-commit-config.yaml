@@ -1,0 +1,23 @@
+repos:
+  - repo: https://github.com/psf/black
+    rev: 23.1.0
+    hooks:
+      - id: black
+        args:
+          - --safe
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: v0.0.259
+    hooks:
+      - id: ruff
+        args:
+          - --fix
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.2.4
+    hooks:
+      - id: codespell
+        exclude_types: [csv, json]
+  - repo: https://github.com/Lucas-C/pre-commit-hooks-bandit
+    rev: v1.0.6
+    hooks:
+      - id: python-bandit-vulnerability-check
+        args: [--recursive, --severity-level, medium, heraeus]
