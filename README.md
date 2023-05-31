@@ -1,6 +1,6 @@
-# AI Project Template
+# Case study: Credit card fraud detection
 
-[![Build](https://github.com/felixpeters/ai-project-template/actions/workflows/ci.yml/badge.svg)](https://github.com/felixpeters/ai-project-template/actions/workflows/ci.yml)
+[![Build](https://github.com/felixpeters/fraud-detection/actions/workflows/ci.yml/badge.svg)](https://github.com/felixpeters/fraud-detection/actions/workflows/ci.yml)
 
 Template for developing AI projects according to [proven principles](https://fullstackai.substack.com/p/four-pillars-ai-development) and best practices.
 
@@ -21,7 +21,6 @@ Template for developing AI projects according to [proven principles](https://ful
 
 ### Installation process
 
-- Create a new repository from this template using `gh repo create <repo-name> --template felixpeters/ai-project-template`
 - Create a Python environment with `python -m venv .venv`
 - Activate the environment with `source .venv/bin/activate`
 - Install the development dependencies with `pip install -r requirements-dev.txt`
@@ -53,8 +52,3 @@ The repository is structured as follows:
 | ID   | Description                                                    | Trigger               |
 | ---- | -------------------------------------------------------------- | --------------------- |
 | `ci` | Installs dependencies, builds the packagage and runs all tests | Push to `main` branch |
-
-## Roadmap
-
-- [ ] Add common utility functions (load configuration, logging, etc.)
-- [ ] Add Dockerfile for VS Code Dev Container as alternative dev environment

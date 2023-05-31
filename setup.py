@@ -4,13 +4,13 @@ with open("README.md") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="ai-project-template",
+    name="fraud-detection",
     version="0.1.0",
     author="Felix Peters",
-    description="Template for developing AI projects according to proven principles and best practices.",
+    description="Full-stack ML case study for credit card fraud detection.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/felixpeters/ai-project-template",
+    url="https://github.com/felixpeters/fraud-detection",
     packages=setuptools.find_packages(),
     install_requires=[],
     classifiers=[
