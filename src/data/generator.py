@@ -1,4 +1,5 @@
 import random
+import time
 from typing import Sequence
 
 import numpy as np
@@ -157,3 +158,53 @@ def generate_transactions_table(
         ]
 
     return customer_transactions
+
+
+def generate_dataset(
+    n_customers: int = 10000, n_terminals: int = 1000000, nb_days: int = 90, start_date: str = "2018-04-01", r: int = 5
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """Generates a complete credit card transaction dataset.
+
+    Args:
+        n_customers (int, optional): Desired number of customers. Defaults to 10000.
+        n_terminals (int, optional): Desired number of terminals. Defaults to 1000000.
+        nb_days (int, optional): Desired number of simulated days. Defaults to 90.
+        start_date (str, optional): Desired start date. Defaults to "2018-04-01".
+        r (int, optional): Radius within customers make transactions. Defaults to 5.
+
+    Returns:
+        tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]: Customer, terminal, and transaction tables.
+    """
+    start_time = time.time()
+    customer_profiles_table = generate_customer_profiles_table(n_customers, random_state=0)
+    print(f"Time to generate customer profiles table: {time.time() - start_time:.2}s")
+
+    start_time = time.time()
+    terminal_profiles_table = generate_terminal_profiles_table(n_terminals, random_state=1)
+    print(f"Time to generate terminal profiles table: {time.time() - start_time:.2}s")
+
+    start_time = time.time()
+    x_y_terminals = terminal_profiles_table[["loc_long_coord", "loc_lat_coord"]].values.astype(float)
+    customer_profiles_table["available_terminals"] = customer_profiles_table.apply(
+        lambda x: get_list_terminals_within_radius(x, x_y_terminals=x_y_terminals, r=r), axis=1
+    )
+    customer_profiles_table["nb_terminals"] = customer_profiles_table.available_terminals.apply(len)
+    print(f"Time to associate terminals to customers: {time.time() - start_time:.2}s")
+
+    start_time = time.time()
+    transactions_df = (
+        customer_profiles_table.groupby("customer_id")
+        .apply(lambda x: generate_transactions_table(x.iloc[0], nb_days=nb_days))
+        .reset_index(drop=True)
+    )
+    print(f"Time to generate transactions: {time.time() - start_time:.2}s")
+
+    # Sort transactions chronologically
+    transactions_df = transactions_df.sort_values("tx_datetime")
+    # Reset indices, starting from 0
+    transactions_df.reset_index(inplace=True, drop=True)
+    transactions_df.reset_index(inplace=True)
+    # TRANSACTION_ID are the dataframe indices, starting from 0
+    transactions_df.rename(columns={"index": "transaction_id"}, inplace=True)
+
+    return (customer_profiles_table, terminal_profiles_table, transactions_df)

@@ -2,6 +2,7 @@ import pytest
 
 from src.data.generator import (
     generate_customer_profiles_table,
+    generate_dataset,
     generate_terminal_profiles_table,
     generate_transactions_table,
     get_list_terminals_within_radius,
@@ -16,6 +17,11 @@ def customer_df():
 @pytest.fixture(scope="session")
 def terminal_df():
     return generate_terminal_profiles_table(n_terminals=5)
+
+
+@pytest.fixture(scope="session")
+def dataset():
+    return generate_dataset(n_customers=5, n_terminals=5, nb_days=5, start_date="2018-04-01", r=50)
 
 
 @pytest.fixture(scope="session")
@@ -74,3 +80,10 @@ def test_generate_transactions_table(customer_df, terminal_df, transactions_df):
         for col in ["tx_time_seconds", "tx_time_days", "customer_id", "terminal_id", "tx_amount"]
     )
     assert all(amount >= 0 for amount in transactions_df.tx_amount.values)
+
+
+def test_generate_dataset(dataset):
+    customer_table, terminal_table, transaction_table = dataset
+    assert len(customer_table) == 5
+    assert len(terminal_table) == 5
+    assert len(transaction_table) > 0
