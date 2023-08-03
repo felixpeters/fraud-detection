@@ -194,7 +194,7 @@ def generate_dataset(
     start_time = time.time()
     transactions_df = (
         customer_profiles_table.groupby("customer_id")
-        .apply(lambda x: generate_transactions_table(x.iloc[0], nb_days=nb_days))
+        .apply(lambda x: generate_transactions_table(x.iloc[0], start_date=start_date, nb_days=nb_days))
         .reset_index(drop=True)
     )
     print(f"Time to generate transactions: {time.time() - start_time:.2}s")
