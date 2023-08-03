@@ -1,0 +1,16 @@
+paths: # list or string
+  - hcv_vi
+badge: docs # Path
+exclude: .*/test # regex
+verbose: 3 # int (0-4)
+skip_magic: True # Boolean
+skip_file_doc: True # Boolean
+skip_init: False # Boolean
+skip_class_def: False # Boolean
+skip_private: True # Boolean
+skip_property: True
+follow_links: True # Boolean
+accept_empty: True # Boolean
+ignore_names_file: .*/test # regex
+fail_under: 90 # int
+percentage_only: False # Boolean

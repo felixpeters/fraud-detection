@@ -16,6 +16,10 @@ repos:
     hooks:
       - id: codespell
         exclude_types: [csv, json]
+  - repo: https://github.com/HunterMcGushion/docstr_coverage
+    rev: v2.2.0
+    hooks:
+      - id: docstr-coverage
   - repo: https://github.com/Lucas-C/pre-commit-hooks-bandit
     rev: v1.0.6
     hooks:

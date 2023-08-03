@@ -2,3 +2,5 @@ project: credit-card-fraud-detection
 data:
   generator:
     num_customers: 1000
+    num_terminals: 1000
+    customer_radius: 50
