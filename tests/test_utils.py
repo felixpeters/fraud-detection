@@ -1,12 +1,7 @@
+import pytest
 import yaml
 
-from src.utils import add, load_config
-
-
-def test_add():
-    assert add(1, 2) == 3
-    assert add(0, 0) == 0
-    assert add(-1, 1) == 0
+from src.utils import load_config
 
 
 def test_load_config(tmp_path):
@@ -23,4 +18,5 @@ def test_load_config(tmp_path):
     config_path = tmp_path / "test_config_invalid.yaml"
     with open(config_path, "w") as f:
         f.write("invalid_yaml")
-    assert load_config(config_path) is None
+    with pytest.raises(TypeError):
+        load_config(config_path)

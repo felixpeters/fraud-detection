@@ -1,1 +1,4 @@
-project: ai-project-template
+project: credit-card-fraud-detection
+data:
+  generator:
+    num_customers: 1000

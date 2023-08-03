@@ -4,10 +4,6 @@ from typing import Dict
 import yaml
 
 
-def add(a: int, b: int) -> int:
-    return a + b
-
-
 def load_config(path: Path) -> Dict:
     """Load config from yaml file.
 
@@ -20,5 +16,5 @@ def load_config(path: Path) -> Dict:
     with open(path) as f:
         config = yaml.safe_load(f)
     if not isinstance(config, dict):
-        return None
+        raise TypeError("Config must be a dictionary.")
     return config
