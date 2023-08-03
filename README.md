@@ -5,6 +5,14 @@
 
 Template for developing AI projects according to [proven principles](https://fullstackai.substack.com/p/four-pillars-ai-development) and best practices
 
+## Business case
+
+Good case studies on this subject from major tech companies:
+
+- [How we built Stripe Radar](https://stripe.com/blog/how-we-built-it-stripe-radar) (Stripe)
+- [Deploying Large-scale Fraud Detection Machine Learning Models at PayPal](https://medium.com/paypal-tech/machine-learning-model-ci-cd-and-shadow-platform-8c4f44998c78) (PayPal)
+
+
 ## Setup
 
 ### Prerequisites
