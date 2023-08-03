@@ -208,3 +208,81 @@ def generate_dataset(
     transactions_df.rename(columns={"index": "transaction_id"}, inplace=True)
 
     return (customer_profiles_table, terminal_profiles_table, transactions_df)
+
+
+def add_frauds(
+    customer_profiles_table: pd.DataFrame,
+    terminal_profiles_table: pd.DataFrame,
+    transactions_df: pd.DataFrame,
+    num_compomised_terminals_per_day: int = 2,
+    compromised_terminal_duration: int = 28,
+    num_compromised_customers_per_day: int = 3,
+    compromised_customer_duration: int = 14,
+) -> pd.DataFrame:
+    """Adds columns with indicator for fraudulent transactions and the respective scenario.
+
+    Args:
+        customer_profiles_table (pd.DataFrame): Customer profiles table.
+        terminal_profiles_table (pd.DataFrame): Terminal profiles table.
+        transactions_df (pd.DataFrame): Transactions table.
+        num_compomised_terminals_per_day (int, optional): Number of random compromised terminals per day (scenario 2).
+        compromised_terminal_duration (int, optional): Duration of terminal being compromised in days. Defaults to 28.
+        num_compromised_customers_per_day (int, optional): Number of random compromised customers per day (scenario 3).
+        compromised_customer_duration (int, optional): Duration of customer being compromised. Defaults to 14.
+
+    Returns:
+        pd.DataFrame: Transactions table with fraud indicators.
+    """
+    # By default, all transactions are genuine
+    transactions_df["tx_fraud"] = 0
+    transactions_df["tx_fraud_scenario"] = 0
+
+    # Scenario 1
+    transactions_df.loc[transactions_df.tx_amount > 220, "tx_fraud"] = 1
+    transactions_df.loc[transactions_df.tx_amount > 220, "tx_fraud_scenario"] = 1
+    nb_frauds_scenario_1 = transactions_df.tx_fraud.sum()
+    print("Number of frauds from scenario 1: " + str(nb_frauds_scenario_1))
+
+    # Scenario 2
+    for day in range(transactions_df.tx_time_days.max()):
+        compromised_terminals = terminal_profiles_table.terminal_id.sample(
+            n=num_compomised_terminals_per_day, random_state=day
+        )
+
+        compromised_transactions = transactions_df[
+            (transactions_df.tx_time_days >= day)
+            & (transactions_df.tx_time_days < day + compromised_terminal_duration)
+            & (transactions_df.terminal_id.isin(compromised_terminals))
+        ]
+
+        transactions_df.loc[compromised_transactions.index, "tx_fraud"] = 1
+        transactions_df.loc[compromised_transactions.index, "tx_fraud_scenario"] = 2
+
+    nb_frauds_scenario_2 = transactions_df.tx_fraud.sum() - nb_frauds_scenario_1
+    print("Number of frauds from scenario 2: " + str(nb_frauds_scenario_2))
+
+    # Scenario 3
+    for day in range(transactions_df.tx_time_days.max()):
+        compromised_customers = customer_profiles_table.customer_id.sample(
+            n=num_compromised_customers_per_day, random_state=day
+        ).values
+
+        compromised_transactions = transactions_df[
+            (transactions_df.tx_time_days >= day)
+            & (transactions_df.tx_time_days < day + compromised_customer_duration)
+            & (transactions_df.customer_id.isin(compromised_customers))
+        ]
+
+        nb_compromised_transactions = len(compromised_transactions)
+
+        random.seed(day)
+        index_fauds = random.sample(list(compromised_transactions.index.values), k=int(nb_compromised_transactions / 3))
+
+        transactions_df.loc[index_fauds, "tx_amount"] = transactions_df.loc[index_fauds, "tx_amount"] * 5
+        transactions_df.loc[index_fauds, "tx_fraud"] = 1
+        transactions_df.loc[index_fauds, "tx_fraud_scenario"] = 3
+
+    nb_frauds_scenario_3 = transactions_df.tx_fraud.sum() - nb_frauds_scenario_2 - nb_frauds_scenario_1
+    print("Number of frauds from scenario 3: " + str(nb_frauds_scenario_3))
+
+    return transactions_df

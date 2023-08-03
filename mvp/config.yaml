@@ -5,3 +5,4 @@ data:
     num_terminals: 10000
     customer_radius: 5
     num_days: 183
+    start_date: 2023-02-01

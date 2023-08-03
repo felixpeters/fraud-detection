@@ -1,6 +1,7 @@
 import pytest
 
 from src.data.generator import (
+    add_frauds,
     generate_customer_profiles_table,
     generate_dataset,
     generate_terminal_profiles_table,
@@ -22,6 +23,24 @@ def terminal_df():
 @pytest.fixture(scope="session")
 def dataset():
     return generate_dataset(n_customers=5, n_terminals=5, nb_days=5, start_date="2018-04-01", r=50)
+
+
+@pytest.fixture(scope="session")
+def dataset_with_frauds(dataset):
+    cust_df, term_df, tx_df = dataset
+    return (
+        cust_df,
+        term_df,
+        add_frauds(
+            cust_df,
+            term_df,
+            tx_df,
+            num_compomised_terminals_per_day=1,
+            num_compromised_customers_per_day=2,
+            compromised_customer_duration=1,
+            compromised_terminal_duration=2,
+        ),
+    )
 
 
 @pytest.fixture(scope="session")
@@ -87,3 +106,11 @@ def test_generate_dataset(dataset):
     assert len(customer_table) == 5
     assert len(terminal_table) == 5
     assert len(transaction_table) > 0
+
+
+def test_add_frauds(dataset_with_frauds):
+    _, _, tx_df = dataset_with_frauds
+    print("Number of frauds:", tx_df.tx_fraud.sum())
+    assert len(tx_df) > 0
+    assert all(col in tx_df.columns for col in ["tx_fraud", "tx_fraud_scenario"])
+    assert tx_df.tx_fraud.sum() > 0, f"Number of frauds expected > 0, but got {tx_df.tx_fraud.sum()}"
