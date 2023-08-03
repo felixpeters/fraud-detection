@@ -1,5 +1,5 @@
 paths: # list or string
-  - hcv_vi
+  - src
 badge: docs # Path
 exclude: .*/test # regex
 verbose: 3 # int (0-4)
