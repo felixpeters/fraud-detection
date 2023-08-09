@@ -1,5 +1,8 @@
+kaleido
 notebook
 numpy
 pandas
+pillow
+plotly
 python-dotenv
 wandb
