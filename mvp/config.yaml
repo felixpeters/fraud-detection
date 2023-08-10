@@ -6,3 +6,9 @@ data:
     customer_radius: 5
     num_days: 183
     start_date: 2023-02-01
+  features:
+    window_sizes:
+      - 1
+      - 7
+      - 30
+    delay_period: 7
