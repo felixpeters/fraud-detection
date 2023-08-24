@@ -1,6 +1,7 @@
 # Case study: Credit card fraud detection
 
 [![Build](https://github.com/felixpeters/fraud-detection/actions/workflows/ci.yml/badge.svg)](https://github.com/felixpeters/fraud-detection/actions/workflows/ci.yml)
+[![Docs](https://raw.githubusercontent.com/felixpeters/fraud-detection/main/docs.svg)](https://github.com/felixpeters/fraud-detection)
 [![Visualize in W&B](https://raw.githubusercontent.com/wandb/assets/main/wandb-github-badge-gradient.svg)](https://wandb.ai/felixpeters/fraud-detection)
 
 Template for developing AI projects according to [proven principles](https://fullstackai.substack.com/p/four-pillars-ai-development) and best practices
@@ -11,7 +12,6 @@ Good case studies on this subject from major tech companies:
 
 - [How we built Stripe Radar](https://stripe.com/blog/how-we-built-it-stripe-radar) (Stripe)
 - [Deploying Large-scale Fraud Detection Machine Learning Models at PayPal](https://medium.com/paypal-tech/machine-learning-model-ci-cd-and-shadow-platform-8c4f44998c78) (PayPal)
-
 
 ## Setup
 
