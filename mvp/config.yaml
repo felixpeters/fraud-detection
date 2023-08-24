@@ -12,3 +12,25 @@ data:
       - 7
       - 30
     delay_period: 7
+    input_features:
+      - tx_amount
+      - tx_during_weekend
+      - tx_during_night
+      - customer_id_nb_tx_1_day_window
+      - customer_id_avg_amount_1_day_window
+      - customer_id_nb_tx_7_day_window
+      - customer_id_avg_amount_7_day_window
+      - customer_id_nb_tx_30_day_window
+      - customer_id_avg_amount_30_day_window
+      - terminal_id_nb_tx_1_day_window
+      - terminal_id_risk_1_day_window
+      - terminal_id_nb_tx_7_day_window
+      - terminal_id_risk_7_day_window
+      - terminal_id_nb_tx_30_day_window
+      - terminal_id_risk_30_day_window
+    output_feature: tx_fraud
+  split:
+    start_date_training: 2023-06-01
+    delta_train: 7
+    delta_delay: 7
+    delta_test: 7

@@ -5,4 +5,5 @@ pandas
 pillow
 plotly
 python-dotenv
+scikit-learn
 wandb
